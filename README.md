@@ -1,4 +1,4 @@
-injectd 0.1
+injectd 0.1 ![Build status](https://travis-ci.org/endel/injectd.svg?branch=master)
 ===
 
 This library is the leanest dependency injection implementation you can
@@ -28,6 +28,8 @@ Usage
 interface IApp {}
 
 // application.ts
+import { register } from "injectd"
+
 class Application implements IApp {
   constructor () {
     register<IApp>("App", this);
@@ -35,6 +37,8 @@ class Application implements IApp {
 }
 
 // screen.ts
+import { inject } from "injectd"
+
 class Screen {
   @inject("App")
   app: IApp;
