@@ -1,0 +1,43 @@
+{
+  "name": "injectd",
+  "version": "0.1.0",
+  "description": "Lean dependency injection for JavaScript (ES2016) and TypeScript",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "scripts": {
+    "start": "karma start",
+    "prepublish": "rimraf ./dist && tsc -d",
+    "test": "mocha test/**.ts --require ts-node/register"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/endel/injectd.git"
+  },
+  "keywords": [
+    "dependency injection",
+    "di"
+  ],
+  "author": "Endel Dreyer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/endel/injectd/issues"
+  },
+  "homepage": "https://github.com/endel/injectd#readme",
+  "devDependencies": {
+    "awesome-typescript-loader": "^1.1.1",
+    "chai": "^3.5.0",
+    "karma": "^0.13.22",
+    "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^1.0.1",
+    "karma-mocha": "^1.0.1",
+    "karma-sauce-launcher": "^1.0.0",
+    "karma-typescript-preprocessor": "^0.2.0",
+    "karma-webpack": "^1.7.0",
+    "mocha": "^2.5.3",
+    "rimraf": "^2.5.2",
+    "ts-node": "^0.8.0",
+    "typescript": "^1.8.10",
+    "webpack": "^2.1.0-beta.13",
+    "webpack-dev-server": "^2.1.0-beta.0"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "baseDir": "./src",
+  "compilerOptions": {
+    "target": "ES5",
+    "outDir": "./dist",
+    "module": "commonjs",
+    "noImplicitAny": true,
+    "experimentalDecorators": true
+  },
+  "exclude": [
+    "node_modules",
+    "test"
+  ]
+}
