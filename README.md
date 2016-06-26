@@ -28,7 +28,7 @@ Usage
 // application.ts
 import { register } from "injectd"
 
-export class Application implements IApp {
+export class Application {
   constructor () {
     register(this);
   }
