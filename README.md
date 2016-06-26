@@ -38,7 +38,7 @@ export class Application {
 import { Application } from "./application"
 import { inject } from "injectd"
 
-class Screen {
+export class Screen {
   @inject(Application)
   app: Application;
 }
