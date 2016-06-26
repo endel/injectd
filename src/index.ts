@@ -1,14 +1,14 @@
 import Context from "./Context"
 export var context = new Context()
 
-export function inject(id: string): Function {
+export function inject(id: any): Function {
   return context.inject(id);
 }
 
-export function register<T>(id: string, instance: T) {
-  context.register(id, instance)
+export function register<T>(idOrInstance: string | T, instance?: T) {
+  context.register(idOrInstance, instance);
 }
 
-export function resolve<T>(idOrType: string | Object): T {
-  return context.resolve<T>(idOrType);
+export function resolve<T>(id: any): T {
+  return context.resolve<T>(id);
 }

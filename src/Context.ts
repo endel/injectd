@@ -1,31 +1,26 @@
 export default class Context {
-  instances: {[id: string]: any} = {};
+  instances: any = {};
 
-  public register<T>(id: string, instance: T): void {
-    this.instances[id] = instance;
+  public register<T>(idOrInstance: string | T, instance?: T): void {
+    if (instance === undefined) {
+      this.instances[<any>idOrInstance.constructor] = idOrInstance;
+    } else {
+      this.instances[<string>idOrInstance] = instance;
+    }
   }
 
-  public inject(id: string): Function {
+  public inject(id: any): Function {
     return (proto: any, key: string) => {
       Object.defineProperty(proto, key, {
         configurable: true,
         enumerable: true,
-        get: () => { return this.instances[id] }
+        get: this.resolve.bind(this, id)
       });
     };
   }
 
-  public resolve<T>(idOrType: string | Object): T {
-    if (typeof(idOrType)==="string") {
-      return this.instances[ <string>idOrType ];
-
-    } else {
-      for (let id in this.instances) {
-        if (this.instances[id] instanceof <any>idOrType) {
-          return this.instances[id];
-        }
-      }
-    }
+  public resolve<T>(id: any): T {
+    return this.instances[id];
   }
 
   public clear() {

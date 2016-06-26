@@ -1,6 +1,6 @@
 {
   "name": "injectd",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Lean dependency injection for JavaScript (ES2016) and TypeScript",
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",

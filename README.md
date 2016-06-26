@@ -2,14 +2,14 @@ injectd 0.1 ![Build status](https://travis-ci.org/endel/injectd.svg?branch=maste
 ===
 
 This library is the leanest dependency injection implementation you can
-possibly have for JavaScript (ES2016) and TypeScript. **~1kb filesize
+possibly have for JavaScript (ES2016) and TypeScript. Just **~1kb filesize
 (uncompressed)**
 
-The API consists in only three methods: `inject`, `register` and `resolve`.
+The API consists in three methods: `inject`, `register` and `resolve`.
 
-- `register(id: string, instance: any)`: Register instance with given identifier. The instance registered will be available for `inject` and `resolve` methods.
-- `inject(id: string)`: A decorator to inject a previously registered instance into target class property. ([see usage below](#usage))
-- `resolve(idOrType: string | Object)`: Get previously registered instance by given name or type.
+- `register<T>(idOrInstance: string | any, instance?: any): void`: Register instance with given identifier. The instance registered will be available for `inject` and `resolve` methods.
+- `inject(id: any)`: A decorator to inject a previously registered instance into target class property. ([see usage below](#usage))
+- `resolve<T>(id: any): T`: Get previously registered instance by given name or type. (used under the hood by `inject` method)
 
 Configuration
 ---
@@ -25,29 +25,30 @@ Usage
 ---
 
 ```typescript
-interface IApp {}
-
 // application.ts
 import { register } from "injectd"
 
-class Application implements IApp {
+export class Application implements IApp {
   constructor () {
-    register<IApp>("App", this);
+    register(this);
   }
 }
 
 // screen.ts
+import { Application } from "./application"
 import { inject } from "injectd"
 
 class Screen {
-  @inject("App")
-  app: IApp;
+  @inject(Application)
+  app: Application;
 }
 
 // main.ts
 let myApp = new Application();
 
 // anywhere.ts
+import { Screen } from "./screen"
+
 let screen = new Screen();
 screen.app // your "Application" instance is here!
 ```

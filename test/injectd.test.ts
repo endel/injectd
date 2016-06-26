@@ -7,12 +7,12 @@ interface IApp {}
 
 class Application implements IApp {
   constructor () {
-    register<IApp>("App", this);
+    register(this);
   }
 }
 
 class Screen {
-  @inject("App")
+  @inject(Application)
   app: IApp;
 }
 
@@ -20,36 +20,24 @@ describe("injectd", () => {
   // clear all injections on each test
   beforeEach(() => context.clear())
 
-  describe("#inject", () => {
-    it("injected variable should be undefined without registering", () => {
-      let screen = new Screen();
-      assert.equal(screen.app, undefined);
-    })
-
-    it("should inject Application instance on Screen class", () => {
-      let app = new Application();
-      let screen = new Screen();
-      assert.equal(screen.app, app);
-    })
+  it("injected variable should be undefined without registering", () => {
+    let screen = new Screen();
+    assert.equal(screen.app, undefined);
   })
 
-  describe("#resolve", () => {
+  it("should inject Application instance on Screen class", () => {
+    let app = new Application();
+    let screen = new Screen();
+    assert.equal(screen.app, app);
+  })
 
-    it("shouldn't resolve without registering", () => {
-      assert.equal(resolve<IApp>("App"), null);
-      assert.equal(resolve<IApp>(Application), null);
-    })
+  it("shouldn't resolve without registering", () => {
+    assert.equal(resolve<IApp>(Application), null);
+  })
 
-    it("should resolve by name", () => {
-      let app = new Application();
-      assert.equal(resolve<IApp>("App"), app);
-    })
-
-    it("should resolve by class definition", () => {
-      let app = new Application();
-      assert.equal(resolve<IApp>(Application), app);
-    })
-
+  it("should resolve by class definition", () => {
+    let app = new Application();
+    assert.equal(resolve(Application), app);
   })
 
 })
