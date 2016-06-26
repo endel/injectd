@@ -1,3 +1,6 @@
+const webpackConfig = require('./webpack.config.js')
+const browsers = require('./browsers.json')
+
 module.exports = function (config) {
   return {
     basePath: "",
