@@ -5,9 +5,9 @@
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
   "scripts": {
-    "start": "karma start",
+    "start": "mocha test/**.ts --require ts-node/register",
     "prepublish": "rimraf ./dist && tsc -d",
-    "test": "mocha test/**.ts --require ts-node/register"
+    "test": "karma start"
   },
   "repository": {
     "type": "git",
