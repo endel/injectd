@@ -1,11 +1,11 @@
 export default class Context {
   instances: any = {};
 
-  public register<T>(idOrInstance: string | T, instance?: T): void {
+  public register<T>(idOrInstance: any | T, instance?: T): void {
     if (instance === undefined) {
       this.instances[<any>idOrInstance.constructor] = idOrInstance;
     } else {
-      this.instances[<string>idOrInstance] = instance;
+      this.instances[<any>idOrInstance] = instance;
     }
   }
 

@@ -5,7 +5,7 @@ export function inject(id: any): Function {
   return context.inject(id);
 }
 
-export function register<T>(idOrInstance: string | T, instance?: T) {
+export function register<T>(idOrInstance: any | T, instance?: T) {
   context.register(idOrInstance, instance);
 }
 
