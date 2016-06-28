@@ -16,6 +16,11 @@ class Screen {
   app: IApp;
 }
 
+class InjectStatic {
+  @inject(Application)
+  static app: IApp;
+}
+
 describe("injectd", () => {
   // clear all injections on each test
   beforeEach(() => context.clear())
@@ -29,6 +34,11 @@ describe("injectd", () => {
     let app = new Application();
     let screen = new Screen();
     assert.equal(screen.app, app);
+  })
+
+  it("should inject Application instance as static variable", () => {
+    let app = new Application();
+    assert.equal(InjectStatic.app, app);
   })
 
   it("shouldn't resolve without registering", () => {
