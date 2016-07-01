@@ -3,22 +3,30 @@
 import { assert } from "chai"
 import { inject, register, resolve, context } from "../src/index.ts"
 
-interface IApp {}
-
-class Application implements IApp {
+@register.singleton()
+class Singleton {
   constructor () {
-    register(this);
+    console.log("Singleton instantiated")
+  }
+}
+
+class Application {
+  constructor () {
+    register.instance(this);
   }
 }
 
 class Screen {
   @inject(Application)
-  app: IApp;
+  app: Application;
 }
 
 class InjectStatic {
   @inject(Application)
-  static app: IApp;
+  static app: Application;
+
+  @inject(Singleton)
+  static singleton: Singleton;
 }
 
 describe("injectd", () => {
@@ -42,7 +50,7 @@ describe("injectd", () => {
   })
 
   it("shouldn't resolve without registering", () => {
-    assert.equal(resolve<IApp>(Application), null);
+    assert.equal(resolve<Application>(Application), null);
   })
 
   it("should resolve by class definition", () => {

@@ -1,15 +1,13 @@
+import Registerer from "./Registerer"
+import Resolver from "./Resolver.ts"
+
 export default class Context {
-  instances: any = {};
+  private instances: any = {};
 
-  public register<T>(idOrInstance: any | T, instance?: T): void {
-    if (instance === undefined) {
-      this.instances[<any>idOrInstance.constructor] = idOrInstance;
-    } else {
-      this.instances[<any>idOrInstance] = instance;
-    }
-  }
+  private resolver: Resolver = new Resolver(this.instances);
+  public register: Registerer = new Registerer(this.instances);
 
-  public inject(id: any): Function {
+  public inject(id: any): PropertyDecorator {
     return (proto: any, key: string) => {
       Object.defineProperty(proto, key, {
         configurable: true,
@@ -25,6 +23,7 @@ export default class Context {
 
   public clear() {
     this.instances = {}
+    this.register.setInstances(this.instances)
   }
 
 }

@@ -1,12 +1,11 @@
 import Context from "./Context"
-export var context = new Context()
+import Registerer from "./Registerer.ts"
+
+export var context: Context = new Context()
+export var register: Registerer = context.register;
 
 export function inject(id: any): Function {
   return context.inject(id);
-}
-
-export function register<T>(idOrInstance: any | T, instance?: T) {
-  context.register(idOrInstance, instance);
 }
 
 export function resolve<T>(id: any): T {
