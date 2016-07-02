@@ -3,16 +3,9 @@
 import { assert } from "chai"
 import { inject, register, resolve, context } from "../src/index.ts"
 
-@register.singleton()
-class Singleton {
-  constructor () {
-    console.log("Singleton instantiated")
-  }
-}
-
 class Application {
   constructor () {
-    register.instance(this);
+    register.instance(Application, this);
   }
 }
 
@@ -24,9 +17,6 @@ class Screen {
 class InjectStatic {
   @inject(Application)
   static app: Application;
-
-  @inject(Singleton)
-  static singleton: Singleton;
 }
 
 describe("injectd", () => {
@@ -47,6 +37,24 @@ describe("injectd", () => {
   it("should inject Application instance as static variable", () => {
     let app = new Application();
     assert.equal(InjectStatic.app, app);
+  })
+
+  it("factory should create new instance every call", () => {
+    @register.factory()
+    class Factory {
+      constructor () { }
+    }
+
+    assert.notEqual(resolve(Factory), resolve(Factory))
+  })
+
+  it("should return the same singleton instance", () => {
+    @register.singleton()
+    class Singleton {
+      constructor () { }
+    }
+
+    assert.equal(resolve(Singleton), resolve(Singleton))
   })
 
   it("shouldn't resolve without registering", () => {

@@ -1,6 +1,6 @@
-import { Type } from "./Resolver.ts"
+export enum Type { Instance, Singleton, Factory }
 
-interface IRegistration  {
+export interface IRegistration  {
   type: Type;
   ref: any;
 }
@@ -18,22 +18,21 @@ export default class Registerer {
 
   public instance<T>(idOrInstance: any | T, instance?: T): void {
     if (instance === undefined) {
-      this.instances[<any>idOrInstance.constructor] = idOrInstance;
+      this.instances[<any>idOrInstance.constructor] = { type: Type.Instance, ref: idOrInstance };
     } else {
-      this.instances[<any>idOrInstance] = instance;
+      this.instances[<any>idOrInstance] = { type: Type.Instance, ref: instance };
     }
   }
 
   public factory(...args: any[]): ClassDecorator {
     return (constructor: Function) => {
-      this.instances[<any>constructor] = constructor
+      this.instances[<any>constructor] = { type: Type.Factory, ref: constructor }
     }
   }
 
   public singleton(...args: any[]): ClassDecorator {
     return (constructor: Function) => {
-      // console.log("register singleton: ", this, constructor)
-      this.instances[<any>constructor] = constructor
+      this.instances[<any>constructor] = { type: Type.Singleton, ref: constructor }
     }
   }
 
